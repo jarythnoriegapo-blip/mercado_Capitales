@@ -620,6 +620,11 @@
         color: var(--azul-marino);
       }
 
+      .field-label {
+        font-weight: 700;
+        color: var(--azul-marino);
+      }
+
       .field input,
       .field select {
         width: 100%;
@@ -686,6 +691,11 @@
         cursor: pointer;
         font-weight: 700;
         min-height: 44px;
+        transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+      }
+
+      .tab-btn:hover {
+        transform: translateY(-1px);
       }
 
       .tab-btn.active {
@@ -717,12 +727,18 @@
         box-shadow: 0 4px 12px rgba(22, 35, 79, 0.035);
       }
 
+      .result-card.featured {
+        border-color: rgba(46, 158, 91, 0.45);
+        box-shadow: 0 6px 18px rgba(46, 158, 91, 0.1);
+      }
+
       .result-card .label {
         font-size: 0.8rem;
         color: #5a6273;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         margin-bottom: 8px;
+        min-height: 2.4em;
       }
 
       .result-card .value {
@@ -760,6 +776,15 @@
         border-radius: 16px;
         padding: 18px;
         min-height: 340px;
+      }
+
+      .simulador-box > .nav-buttons {
+        justify-content: flex-end;
+        margin-top: 4px;
+      }
+
+      .simulador-box > .nav-buttons .btn {
+        min-width: 190px;
       }
 
       .chart-wrap canvas {
@@ -800,9 +825,16 @@
       @media (max-width: 780px) {
         .team-grid,
         .controls-grid,
-        .results-grid,
         .options-list {
           grid-template-columns: 1fr;
+        }
+
+        .results-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .result-card.featured {
+          grid-column: span 2;
         }
 
         .brand-row {
@@ -936,6 +968,14 @@
         .simulador-box {
           padding: 16px;
           border-radius: 15px;
+        }
+
+        .results-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .result-card.featured {
+          grid-column: auto;
         }
 
         .progress-header {
@@ -1203,8 +1243,8 @@
         <div class="simulador-box">
           <div class="controls-grid">
             <div class="field">
-              <label for="instrumentSelector">Qué invertir</label>
-              <div id="instrumentSelector" class="check-grid"></div>
+              <span class="field-label">Qué invertir</span>
+              <div id="instrumentSelector" class="check-grid" role="group" aria-label="Acciones para simular"></div>
               <p class="field-hint">Seleccione una acción o varias para formar una canasta con pesos iguales.</p>
             </div>
 
@@ -1219,14 +1259,14 @@
             </div>
           </div>
 
-          <div class="tabs" id="modeTabs">
-            <button class="tab-btn active" type="button" data-tab="vf">¿Cuánto tendré?</button>
-            <button class="tab-btn" type="button" data-tab="capital">¿Cuánto debo invertir hoy?</button>
-            <button class="tab-btn" type="button" data-tab="tiempo">¿En cuánto tiempo llego?</button>
-            <button class="tab-btn" type="button" data-tab="aporte">¿Cuánto debo ahorrar al mes?</button>
+          <div class="tabs" id="modeTabs" role="tablist" aria-label="Tipo de cálculo">
+            <button class="tab-btn active" id="tab-vf" type="button" role="tab" aria-selected="true" aria-controls="panel-vf" data-tab="vf" tabindex="0">¿Cuánto tendré?</button>
+            <button class="tab-btn" id="tab-capital" type="button" role="tab" aria-selected="false" aria-controls="panel-capital" data-tab="capital" tabindex="-1">¿Cuánto debo invertir hoy?</button>
+            <button class="tab-btn" id="tab-tiempo" type="button" role="tab" aria-selected="false" aria-controls="panel-tiempo" data-tab="tiempo" tabindex="-1">¿En cuánto tiempo llego?</button>
+            <button class="tab-btn" id="tab-aporte" type="button" role="tab" aria-selected="false" aria-controls="panel-aporte" data-tab="aporte" tabindex="-1">¿Cuánto debo ahorrar al mes?</button>
           </div>
 
-          <div class="tab-panel active" id="panel-vf">
+          <div class="tab-panel active" id="panel-vf" role="tabpanel" aria-labelledby="tab-vf">
             <div class="controls-grid">
               <div class="field">
                 <label for="inversionInicial">Capital inicial</label>
@@ -1243,7 +1283,7 @@
             </div>
           </div>
 
-          <div class="tab-panel" id="panel-capital">
+          <div class="tab-panel" id="panel-capital" role="tabpanel" aria-labelledby="tab-capital">
             <div class="controls-grid">
               <div class="field">
                 <label for="metaCapital">Meta</label>
@@ -1260,7 +1300,7 @@
             </div>
           </div>
 
-          <div class="tab-panel" id="panel-tiempo">
+          <div class="tab-panel" id="panel-tiempo" role="tabpanel" aria-labelledby="tab-tiempo">
             <div class="controls-grid">
               <div class="field">
                 <label for="inicialTiempo">Capital inicial</label>
@@ -1277,7 +1317,7 @@
             </div>
           </div>
 
-          <div class="tab-panel" id="panel-aporte">
+          <div class="tab-panel" id="panel-aporte" role="tabpanel" aria-labelledby="tab-aporte">
             <div class="controls-grid">
               <div class="field">
                 <label for="inicialAporte">Capital inicial</label>
@@ -1300,35 +1340,35 @@
 
           <div class="results-grid">
             <div class="result-card">
-              <div class="label">Escenario pesimista</div>
+              <div class="label" id="pesimistaLabel">Escenario pesimista</div>
               <div class="value" id="pesimistaValor">$ 0</div>
             </div>
-            <div class="result-card">
-              <div class="label">Escenario esperado</div>
+            <div class="result-card featured">
+              <div class="label" id="esperadoLabel">Escenario esperado</div>
               <div class="value" id="esperadoValor">$ 0</div>
             </div>
             <div class="result-card">
-              <div class="label">Escenario optimista</div>
+              <div class="label" id="optimistaLabel">Escenario optimista</div>
               <div class="value" id="optimistaValor">$ 0</div>
             </div>
           </div>
 
-          <div class="mini-note" id="scenarioExplanation">
+          <div class="mini-note" id="scenarioExplanation" aria-live="polite">
             Los escenarios muestran un rango aproximado, no una garantía de resultados futuros.
           </div>
           <div class="simulator-message" id="simulatorMessage" role="status" aria-live="polite"></div>
 
-          <div class="results-grid" style="margin-top: 18px;">
+          <div class="results-grid results-grid--summary">
             <div class="result-card">
-              <div class="label">Total aportado</div>
+              <div class="label" id="totalAportadoLabel">Total aportado</div>
               <div class="value" id="totalAportadoValor">$ 0</div>
             </div>
             <div class="result-card">
-              <div class="label">Ganancia estimada</div>
+              <div class="label" id="gananciaLabel">Ganancia estimada</div>
               <div class="value" id="gananciaValor">$ 0</div>
             </div>
             <div class="result-card">
-              <div class="label">Acciones hoy</div>
+              <div class="label" id="accionesHoyLabel">Acciones hoy</div>
               <div class="value" id="accionesHoyValor">0</div>
             </div>
           </div>
@@ -1336,7 +1376,7 @@
           <div class="mini-note" id="cdtComparison"></div>
           <div class="mini-note" id="realReturnInfo"></div>
 
-          <div class="chart-wrap">
+          <div class="chart-wrap" id="chartWrap">
             <canvas id="simulacionChart"></canvas>
           </div>
         </div>
@@ -1830,7 +1870,7 @@
           sigma = average(selectedStocks.map((s) => Number(s.volatilidad_anual_pct || 0)))/100;
         }
 
-        return { r, sigma, source: tipo === 'custom' ? 'Personalizada' : 'Seleccionada' };
+        return { r: limitarTasaAnual(r), sigma, source: tipo === 'custom' ? 'Personalizada' : 'Seleccionada' };
       }
 
       function average(arr) {
@@ -1872,38 +1912,48 @@
       }
 
       function tiempoParaMeta(C, meta, A, r) {
-        if (r <= 0 && meta > C) {
-          const mesesNecesarios = Math.ceil((meta - C) / Math.max(A, 1));
-          return { años: Math.floor(mesesNecesarios / 12), meses: mesesNecesarios % 12, logrado: mesesNecesarios <= 1200 };
-        }
-        if (r <= 0) {
-          return { años: 0, meses: 0, logrado: true };
-        }
+        if (meta <= C) return { años: 0, meses: 0, mesesTotales: 0, logrado: true };
+        if (r <= -1) return { años: null, meses: null, mesesTotales: null, logrado: false };
 
         let saldo = C;
-        let aporteMensual = A;
         let mes = 0;
         const maxMeses = 1200;
         const i = calcularCuotaMensualEfectiva(r);
         while (mes < maxMeses && saldo < meta) {
-          saldo = saldo * (1 + r) ** (1 / 12);
-          saldo += aporteMensual;
+          saldo = saldo * (1 + i) + A;
           mes += 1;
         }
 
-        if (mes >= maxMeses) {
-          return { años: null, meses: null, logrado: false };
-        }
+        if (saldo < meta) return { años: null, meses: null, mesesTotales: null, logrado: false };
 
         return {
           años: Math.floor(mes / 12),
           meses: mes % 12,
+          mesesTotales: mes,
           logrado: true
         };
       }
 
-      function roundCurrency(value) {
-        return Number(value || 0);
+      function limitarTasaAnual(r) {
+        return Math.max(-0.999999, r);
+      }
+
+      function calcularEscenario(mode, capitalInicial, meta, aporteMensual, años, tasaAnual) {
+        const tasa = limitarTasaAnual(tasaAnual);
+        const i = calcularCuotaMensualEfectiva(tasa);
+
+        if (mode === 'vf') return valorFuturoCapital(capitalInicial, tasa, años, aporteMensual, i);
+        if (mode === 'capital') return capitalNecesario(meta, aporteMensual, tasa, años, i);
+        if (mode === 'tiempo') return tiempoParaMeta(capitalInicial, meta, aporteMensual, tasa);
+        return aporteNecesario(meta, capitalInicial, tasa, años, i);
+      }
+
+      function formatearTiempo(tiempo) {
+        if (!tiempo.logrado) return 'No se alcanza';
+        const partes = [];
+        if (tiempo.años) partes.push(`${tiempo.años} ${tiempo.años === 1 ? 'año' : 'años'}`);
+        if (tiempo.meses || !tiempo.años) partes.push(`${tiempo.meses} ${tiempo.meses === 1 ? 'mes' : 'meses'}`);
+        return partes.join(' y ');
       }
 
       function getSelectedPriceAndVolatility() {
@@ -1918,6 +1968,7 @@
         const acciones = getSelectedStocks();
         if (!acciones.length) {
           return {
+            mode: document.querySelector('#modeTabs .tab-btn.active')?.dataset.tab || state.selectedMode,
             pesimista: 0,
             esperado: 0,
             optimista: 0,
@@ -1933,7 +1984,7 @@
           };
         }
 
-        const mode = document.getElementById('modeTabs .tab-btn.active')?.dataset.tab || 'vf';
+        const mode = document.querySelector('#modeTabs .tab-btn.active')?.dataset.tab || state.selectedMode;
         let capitalInicial = 0;
         let aporteMensual = 0;
         let años = 5;
@@ -1958,41 +2009,36 @@
         }
 
         const { r, sigma } = getRateForSelectedMode();
-        const i = calcularCuotaMensualEfectiva(r);
-        const totalAportado = capitalInicial + (aporteMensual * 12 * años);
-
-        let escenarioEsperado = 0;
-        if (mode === 'vf') {
-          escenarioEsperado = valorFuturoCapital(capitalInicial, r, años, aporteMensual, i);
-        } else if (mode === 'capital') {
-          escenarioEsperado = capitalNecesario(meta, aporteMensual, r, años, i);
-        } else if (mode === 'tiempo') {
-          const tiempo = tiempoParaMeta(capitalInicial, meta, aporteMensual, r);
-          escenarioEsperado = tiempo.logrado ? meta : 0;
-        } else if (mode === 'aporte') {
-          escenarioEsperado = aporteNecesario(meta, capitalInicial, r, años, i);
-        }
-
         const factor = Math.max(1, Math.sqrt(Math.max(1, años)));
-        const pesimista = r - sigma / factor;
-        const optimista = r + sigma / factor;
-
-        const pesimistaValor = mode === 'vf' ? valorFuturoCapital(capitalInicial, pesimista, años, aporteMensual, calcularCuotaMensualEfectiva(pesimista)) : (mode === 'capital' ? capitalNecesario(meta, aporteMensual, pesimista, años, calcularCuotaMensualEfectiva(pesimista)) : (mode === 'tiempo' ? 0 : aporteNecesario(meta, capitalInicial, pesimista, años, calcularCuotaMensualEfectiva(pesimista))));
-        const optimistaValor = mode === 'vf' ? valorFuturoCapital(capitalInicial, optimista, años, aporteMensual, calcularCuotaMensualEfectiva(optimista)) : (mode === 'capital' ? capitalNecesario(meta, aporteMensual, optimista, años, calcularCuotaMensualEfectiva(optimista)) : (mode === 'tiempo' ? 0 : aporteNecesario(meta, capitalInicial, optimista, años, calcularCuotaMensualEfectiva(optimista))));
+        const tasaPesimista = limitarTasaAnual(r - sigma / factor);
+        const tasaOptimista = limitarTasaAnual(r + sigma / factor);
+        const escenarioEsperado = calcularEscenario(mode, capitalInicial, meta, aporteMensual, años, r);
+        const pesimistaValor = calcularEscenario(mode, capitalInicial, meta, aporteMensual, años, tasaPesimista);
+        const optimistaValor = calcularEscenario(mode, capitalInicial, meta, aporteMensual, años, tasaOptimista);
 
         const { precioPromedio } = getSelectedPriceAndVolatility();
-        const accionesHoy = Math.floor(capitalInicial / precioPromedio) || 0;
-        const sobrante = capitalInicial - (accionesHoy * precioPromedio);
+        const capitalParaInvertir = mode === 'capital' ? escenarioEsperado : capitalInicial;
+        const accionesHoy = precioPromedio > 0 ? Math.floor(capitalParaInvertir / precioPromedio) : 0;
+        const sobrante = capitalParaInvertir - (accionesHoy * precioPromedio);
         const cdtRate = Number(document.getElementById('rateType').value === 'custom' ? document.getElementById('customRate').value || CONFIG.tasaCdtDefault : CONFIG.tasaCdtDefault);
         const inflacion = Number(CONFIG.inflacionDefault || 0);
         const realReturn = ((1 + r) / (1 + inflacion / 100)) - 1;
+        const mesesAporte = mode === 'tiempo'
+          ? (escenarioEsperado.logrado ? escenarioEsperado.mesesTotales : null)
+          : años * 12;
+        const aporteResumen = mode === 'aporte' ? escenarioEsperado : aporteMensual;
+        const totalAportado = mesesAporte === null
+          ? null
+          : capitalParaInvertir + aporteResumen * mesesAporte;
+        const metaFinal = mode === 'vf' ? escenarioEsperado : meta;
 
         return {
+          mode,
           pesimista: pesimistaValor,
           esperado: escenarioEsperado,
           optimista: optimistaValor,
           totalAportado,
-          ganancia: Math.max(0, escenarioEsperado - totalAportado),
+          ganancia: totalAportado === null ? null : metaFinal - totalAportado,
           accionesHoy,
           sobrante,
           cdt: cdtRate,
@@ -2004,7 +2050,7 @@
 
       function dibujarGraficoSimulacion() {
         const canvas = document.getElementById('simulacionChart');
-        const years = 6;
+        const years = Math.max(1, Math.min(100, Number(document.getElementById('anios').value || 1)));
         const { r, sigma } = getRateForSelectedMode();
         const capitalInicial = Number(document.getElementById('inversionInicial').value || 0);
         const aporteMensual = Number(document.getElementById('aporteMensual').value || 0);
@@ -2016,8 +2062,8 @@
         const totalAportadoSeries = [];
 
         for (let i = 1; i <= years; i++) {
-          const rPes = r - (sigma / Math.sqrt(Math.max(1, i)));
-          const rOpt = r + (sigma / Math.sqrt(Math.max(1, i)));
+          const rPes = limitarTasaAnual(r - (sigma / Math.sqrt(Math.max(1, i))));
+          const rOpt = limitarTasaAnual(r + (sigma / Math.sqrt(Math.max(1, i))));
           const valorBase = valorFuturoCapital(capitalInicial, r, i, aporteMensual, calcularCuotaMensualEfectiva(r));
           const valorPes = valorFuturoCapital(capitalInicial, rPes, i, aporteMensual, calcularCuotaMensualEfectiva(rPes));
           const valorOpt = valorFuturoCapital(capitalInicial, rOpt, i, aporteMensual, calcularCuotaMensualEfectiva(rOpt));
@@ -2053,6 +2099,32 @@
       function renderSimuladorResultados() {
         const resultados = calcularSimulacionEscenarios();
         const mensaje = document.getElementById('simulatorMessage');
+        const labels = resultados.mode === 'tiempo'
+          ? ['Tiempo pesimista', 'Tiempo esperado', 'Tiempo optimista']
+          : resultados.mode === 'capital'
+            ? ['Capital inicial requerido · pesimista', 'Capital inicial requerido · esperado', 'Capital inicial requerido · optimista']
+            : resultados.mode === 'aporte'
+              ? ['Aporte mensual requerido · pesimista', 'Aporte mensual requerido · esperado', 'Aporte mensual requerido · optimista']
+              : ['Capital final · pesimista', 'Capital final · esperado', 'Capital final · optimista'];
+        ['pesimistaLabel', 'esperadoLabel', 'optimistaLabel'].forEach((id, index) => {
+          document.getElementById(id).textContent = labels[index];
+        });
+        document.getElementById('totalAportadoLabel').textContent = resultados.mode === 'vf'
+          ? 'Total aportado'
+          : 'Total invertido para la meta';
+        document.getElementById('gananciaLabel').textContent = resultados.mode === 'vf'
+          ? 'Ganancia estimada'
+          : 'Rendimiento estimado al final';
+        document.getElementById('accionesHoyLabel').textContent = resultados.mode === 'capital'
+          ? 'Acciones con el capital requerido'
+          : 'Acciones con el capital inicial';
+        document.getElementById('chartWrap').classList.toggle('hidden', resultados.mode !== 'vf' || Boolean(resultados.mostrarMensaje));
+        document.getElementById('scenarioExplanation').textContent = {
+          vf: 'Proyección del capital al final del plazo. Los escenarios son estimaciones, no una garantía de resultados.',
+          capital: 'Capital inicial estimado para alcanzar la meta con los aportes mensuales indicados.',
+          tiempo: 'Tiempo estimado para alcanzar la meta con el capital inicial y los aportes mensuales indicados.',
+          aporte: 'Aporte mensual estimado para alcanzar la meta en el plazo seleccionado.'
+        }[resultados.mode];
 
         if (resultados.mostrarMensaje) {
           ['pesimistaValor', 'esperadoValor', 'optimistaValor', 'totalAportadoValor', 'gananciaValor', 'accionesHoyValor']
@@ -2071,25 +2143,42 @@
 
         mensaje.textContent = '';
 
-        document.getElementById('pesimistaValor').textContent = formatCurrency(resultados.pesimista);
-        document.getElementById('esperadoValor').textContent = formatCurrency(resultados.esperado);
-        document.getElementById('optimistaValor').textContent = formatCurrency(resultados.optimista);
-        document.getElementById('totalAportadoValor').textContent = formatCurrency(resultados.totalAportado);
-        document.getElementById('gananciaValor').textContent = formatCurrency(resultados.ganancia);
+        const formatearResultado = (valor) => resultados.mode === 'tiempo'
+          ? formatearTiempo(valor)
+          : formatCurrency(valor);
+        document.getElementById('pesimistaValor').textContent = formatearResultado(resultados.pesimista);
+        document.getElementById('esperadoValor').textContent = formatearResultado(resultados.esperado);
+        document.getElementById('optimistaValor').textContent = formatearResultado(resultados.optimista);
+        document.getElementById('totalAportadoValor').textContent = resultados.totalAportado === null
+          ? '—'
+          : formatCurrency(resultados.totalAportado);
+        document.getElementById('gananciaValor').textContent = resultados.ganancia === null
+          ? '—'
+          : formatCurrency(resultados.ganancia);
         document.getElementById('accionesHoyValor').textContent = `${formatNumber(resultados.accionesHoy)} (${formatCurrency(resultados.sobrante)} sobrante)`;
 
-        const cdtRate = CONFIG.tasaCdtDefault;
-        const realRate = resultados.realReturn;
-        document.getElementById('cdtComparison').textContent = `Comparación con CDT: si el CDT paga ${percentFormatter(cdtRate)}, su rendimiento proyectado se compara con la rentabilidad esperada del portafolio. La diferencia se debe revisar en la estimación final.`;
-        document.getElementById('realReturnInfo').textContent = `Rentabilidad real frente a la inflación: ${(realRate * 100).toFixed(1)} % (fórmula: (1 + r) / (1 + inflación) - 1).`;
+        const muestraRendimiento = resultados.mode === 'vf';
+        document.getElementById('cdtComparison').textContent = muestraRendimiento
+          ? `Comparación con CDT: si el CDT paga ${percentFormatter(CONFIG.tasaCdtDefault)}, su rendimiento proyectado se compara con la rentabilidad esperada del portafolio.`
+          : '';
+        document.getElementById('realReturnInfo').textContent = muestraRendimiento
+          ? `Rentabilidad real frente a la inflación: ${(resultados.realReturn * 100).toFixed(1)} % (fórmula: (1 + r) / (1 + inflación) - 1).`
+          : '';
 
-        dibujarGraficoSimulacion();
+        if (resultados.mode === 'vf') dibujarGraficoSimulacion();
+        else if (state.simulationChart) {
+          state.simulationChart.destroy();
+          state.simulationChart = null;
+        }
       }
 
       function activarTab(tabName) {
         state.selectedMode = tabName;
         document.querySelectorAll('.tab-btn').forEach((button) => {
-          button.classList.toggle('active', button.dataset.tab === tabName);
+          const isActive = button.dataset.tab === tabName;
+          button.classList.toggle('active', isActive);
+          button.setAttribute('aria-selected', String(isActive));
+          button.tabIndex = isActive ? 0 : -1;
         });
         document.querySelectorAll('.tab-panel').forEach((panel) => {
           panel.classList.toggle('active', panel.id === `panel-${tabName}`);
@@ -2101,6 +2190,24 @@
           activarTab(button.dataset.tab);
           renderSimuladorResultados();
         });
+        button.addEventListener('keydown', (event) => {
+          const tabs = [...document.querySelectorAll('.tab-btn')];
+          const index = tabs.indexOf(button);
+          const nextIndex = event.key === 'ArrowRight'
+            ? (index + 1) % tabs.length
+            : event.key === 'ArrowLeft'
+              ? (index - 1 + tabs.length) % tabs.length
+              : event.key === 'Home'
+                ? 0
+                : event.key === 'End'
+                  ? tabs.length - 1
+                  : -1;
+          if (nextIndex < 0) return;
+          event.preventDefault();
+          tabs[nextIndex].focus();
+          activarTab(tabs[nextIndex].dataset.tab);
+          renderSimuladorResultados();
+        });
       });
 
       document.getElementById('rateType').addEventListener('change', () => {
@@ -2110,7 +2217,9 @@
       });
 
       document.getElementById('customRate').style.display = 'none';
-      document.getElementById('customRate').addEventListener('change', renderSimuladorResultados);
+      document.querySelectorAll('#panel-vf input, #panel-capital input, #panel-tiempo input, #panel-aporte input, #customRate').forEach((input) => {
+        input.addEventListener('input', renderSimuladorResultados);
+      });
       document.getElementById('simulateBtn').addEventListener('click', renderSimuladorResultados);
 
       document.getElementById('printBtn').addEventListener('click', () => {
