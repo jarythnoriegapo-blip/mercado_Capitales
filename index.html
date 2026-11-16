@@ -1,0 +1,2138 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SULAY Asesores de Inversión</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      :root {
+        --azul-marino: #16234F;
+        --verde: #2E9E5B;
+        --azul-claro: #D7E3FA;
+        --blanco: #ffffff;
+        --gris-fondo: #f4f6fb;
+        --gris-texto: #3a3f4d;
+        --gris-medio: #dfe5ee;
+        --rojo: #d94d4d;
+        --verde-suave: #e9f8ef;
+        --amarillo-aviso: #fff3b0;
+        --sombra: 0 10px 26px rgba(22, 35, 79, 0.07);
+        --radio-card: 20px;
+      }
+
+      * { box-sizing: border-box; }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 20px;
+      }
+
+      body {
+        margin: 0;
+        background: var(--gris-fondo);
+        color: var(--gris-texto);
+        font-family: Calibri, Arial, sans-serif;
+        line-height: 1.5;
+      }
+
+      h1, h2, h3, h4, h5 {
+        font-family: Georgia, 'Times New Roman', serif;
+        color: var(--azul-marino);
+        margin: 0 0 0.7rem;
+      }
+
+      p, label, input, select, button, td, th, li {
+        font-family: Calibri, Arial, sans-serif;
+      }
+
+      a {
+        color: var(--azul-marino);
+      }
+
+      .container {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 0 28px 48px;
+      }
+
+      .topbar {
+        background:
+          radial-gradient(circle at 78% 48%, rgba(46, 158, 91, 0.2), transparent 28%),
+          radial-gradient(ellipse at 12% 100%, rgba(85, 111, 190, 0.3), transparent 44%),
+          linear-gradient(120deg, #121d45, var(--azul-marino) 52%, #1d2d61);
+        color: var(--blanco);
+        min-height: clamp(620px, 88vh, 900px);
+        display: flex;
+        align-items: center;
+        padding: clamp(44px, 7vh, 78px) 0;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 14px 36px rgba(22, 35, 79, 0.2);
+      }
+
+      .topbar-inner {
+        width: 100%;
+        max-width: 1520px;
+        margin: 0 auto;
+        padding: 0 clamp(28px, 7vw, 110px);
+      }
+
+      .brand-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+        align-items: center;
+        gap: clamp(38px, 8vw, 130px);
+      }
+
+      .brand {
+        color: var(--blanco);
+        font-size: clamp(2.8rem, 5.5vw, 5.6rem);
+        font-family: Georgia, 'Times New Roman', serif;
+        font-weight: 700;
+        line-height: 1.04;
+        letter-spacing: 0.02em;
+        max-width: 780px;
+        margin: 0;
+      }
+
+      .subtag {
+        font-size: clamp(1.15rem, 2vw, 1.55rem);
+        opacity: 0.92;
+        margin-top: 22px;
+        font-style: italic;
+        line-height: 1.45;
+        max-width: 620px;
+      }
+
+      .hero-eyebrow {
+        margin: 0 0 18px;
+        color: #a9e5be;
+        font-size: 0.88rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .hero-actions {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 18px;
+        margin-top: 30px;
+      }
+
+      .hero-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 52px;
+        padding: 13px 22px;
+        border-radius: 999px;
+        background: var(--verde);
+        color: var(--blanco);
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 0 8px 20px rgba(11, 18, 48, 0.22);
+        transition: transform 0.2s ease, background 0.2s ease;
+      }
+
+      .hero-cta:hover {
+        background: #24854b;
+        transform: translateY(-2px);
+      }
+
+      .hero-university {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.96rem;
+      }
+
+      .hero-visual {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 430px;
+      }
+
+      .hero-visual::before {
+        content: "";
+        position: absolute;
+        width: min(34vw, 440px);
+        aspect-ratio: 1;
+        border: 1px solid rgba(255, 255, 255, 0.19);
+        border-radius: 50%;
+        box-shadow: 0 0 0 26px rgba(255, 255, 255, 0.035), 0 0 0 58px rgba(255, 255, 255, 0.025);
+      }
+
+      .hero-photo {
+        position: relative;
+        width: min(31vw, 390px);
+        height: min(31vw, 390px);
+        min-width: 270px;
+        min-height: 270px;
+        object-fit: cover;
+        object-position: center 26%;
+        border: 7px solid rgba(255, 255, 255, 0.92);
+        border-radius: 50%;
+        box-shadow: 0 24px 60px rgba(5, 10, 30, 0.32);
+      }
+
+      .hero-photo-label {
+        position: absolute;
+        right: 0;
+        bottom: 18px;
+        max-width: 270px;
+        padding: 13px 17px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 14px;
+        background: rgba(19, 30, 72, 0.88);
+        box-shadow: 0 10px 24px rgba(5, 10, 30, 0.24);
+        backdrop-filter: blur(8px);
+        line-height: 1.35;
+      }
+
+      .hero-photo-label strong,
+      .hero-photo-label span {
+        display: block;
+      }
+
+      .hero-photo-label strong {
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 1.05rem;
+      }
+
+      .hero-photo-label span {
+        margin-top: 3px;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 0.84rem;
+      }
+
+      .academic-note {
+        border: 1px solid rgba(255,255,255,0.24);
+        border-left: 4px solid #78d69c;
+        margin-top: 28px;
+        padding: 12px 16px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.08);
+        font-size: 0.95rem;
+        line-height: 1.4;
+        max-width: 680px;
+      }
+
+      main {
+        padding-top: 30px;
+      }
+
+      section {
+        margin-bottom: 26px;
+        padding: 26px;
+        background: var(--blanco);
+        border: 1px solid #e8ecf3;
+        border-radius: var(--radio-card);
+        box-shadow: var(--sombra);
+      }
+
+      .section-title {
+        font-size: clamp(1.65rem, 2.5vw, 2.25rem);
+        margin-bottom: 20px;
+        line-height: 1.2;
+      }
+
+      .section-description {
+        margin: -10px 0 18px;
+        color: #687286;
+        max-width: 760px;
+      }
+
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+        gap: 18px;
+        max-width: 820px;
+      }
+
+      .member-card {
+        background: linear-gradient(135deg, #ffffff 35%, #f5f8ff);
+        border: 1px solid #e4eaf4;
+        border-radius: 18px;
+        padding: 22px;
+        box-shadow: 0 6px 18px rgba(22, 35, 79, 0.05);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .avatar-wrap {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background: var(--azul-marino);
+        color: var(--blanco);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.7rem;
+        font-weight: 700;
+        overflow: hidden;
+        border: 3px solid var(--azul-claro);
+        flex-shrink: 0;
+      }
+
+      .avatar-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .member-card h3 {
+        font-size: 1.2rem;
+        color: var(--azul-marino);
+        margin-bottom: 4px;
+      }
+
+      .member-role {
+        color: var(--azul-marino);
+        font-weight: bold;
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+      }
+
+      .member-pitch {
+        font-size: 0.96rem;
+        line-height: 1.45;
+        color: var(--gris-texto);
+      }
+
+      .team-footer {
+        margin-top: 16px;
+        color: var(--gris-texto);
+        font-size: 0.82rem;
+        text-align: center;
+      }
+
+      .perfil-box {
+        background: linear-gradient(145deg, #f8faff 0%, #edf3ff 100%);
+        border: 1px solid #dfe8f7;
+        border-radius: 18px;
+        padding: 28px;
+      }
+
+      .progress-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .progress-text {
+        font-weight: 700;
+        color: var(--azul-marino);
+      }
+
+      .progress {
+        position: relative;
+        width: 100%;
+        height: 10px;
+        background: #dfe9f8;
+        border-radius: 999px;
+        overflow: hidden;
+        margin-bottom: 18px;
+      }
+
+      .progress-bar {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 0%;
+        background: linear-gradient(90deg, var(--verde), var(--azul-marino));
+        border-radius: 999px;
+        transition: width 0.3s ease;
+      }
+
+      .question {
+        display: none;
+      }
+
+      .question.active {
+        display: block;
+      }
+
+      .question h3 {
+        font-size: clamp(1.2rem, 2vw, 1.6rem);
+        margin-bottom: 16px;
+      }
+
+      .options-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(180px, 1fr));
+        gap: 12px;
+      }
+
+      .option {
+        background: var(--blanco);
+        border: 1px solid var(--gris-medio);
+        border-radius: 12px;
+        padding: 14px 16px;
+        cursor: pointer;
+        transition: 0.2s ease;
+        font-size: 1rem;
+        text-align: left;
+        min-height: 50px;
+      }
+
+      .option:hover {
+        border-color: var(--azul-marino);
+        transform: translateY(-1px);
+      }
+
+      .option.selected {
+        background: var(--azul-claro);
+        border-color: var(--azul-marino);
+        box-shadow: inset 0 0 0 1px var(--azul-marino);
+      }
+
+      .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        border: none;
+        border-radius: 10px;
+        padding: 12px 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+        min-height: 44px;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      .stock-row:focus-visible {
+        outline: 3px solid rgba(46, 158, 91, 0.55);
+        outline-offset: 3px;
+      }
+
+      .btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.45;
+        transform: none;
+      }
+
+      .btn.primary {
+        background: var(--azul-marino);
+        color: var(--blanco);
+      }
+
+      .btn.secondary {
+        background: var(--verde);
+        color: var(--blanco);
+      }
+
+      .btn.ghost {
+        background: transparent;
+        color: var(--azul-marino);
+        border: 1px solid var(--azul-marino);
+      }
+
+      .profile-result {
+        margin-top: 24px;
+        padding: 18px 20px;
+        border-radius: 14px;
+        background: #edf7f1;
+        border: 1px solid rgba(46, 158, 91, 0.25);
+        display: none;
+      }
+
+      .profile-result.visible {
+        display: block;
+      }
+
+      .profile-result h3 {
+        margin-bottom: 8px;
+      }
+
+      .profile-result p {
+        margin: 0;
+        line-height: 1.55;
+      }
+
+      .action-warning {
+        padding: 12px 16px;
+        background: var(--amarillo-aviso);
+        border: 1px solid rgba(195, 165, 0, 0.7);
+        border-radius: 12px;
+        color: #544400;
+        font-weight: 600;
+        margin: 12px 0 18px;
+        display: none;
+      }
+
+      .action-warning.visible {
+        display: block;
+      }
+
+      .trm-display {
+        margin: 0 0 14px;
+        padding: 12px 16px;
+        border-radius: 12px;
+        background: #f2f6ff;
+        border: 1px solid var(--azul-claro);
+        color: var(--azul-marino);
+        font-weight: 700;
+      }
+
+      .trm-display:empty {
+        display: none;
+      }
+
+      .table-shell {
+        background: var(--blanco);
+        border: 1px solid var(--gris-medio);
+        border-radius: 14px;
+        overflow: hidden;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 1180px;
+      }
+
+      thead {
+        background: var(--azul-marino);
+        color: var(--blanco);
+      }
+
+      th, td {
+        padding: 13px 11px;
+        border-bottom: 1px solid var(--gris-medio);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+
+      tbody tr:hover {
+        background: #f6f9ff;
+      }
+
+      .stock-row {
+        cursor: pointer;
+      }
+
+      .positive { color: var(--verde); font-weight: 700; }
+      .negative { color: var(--rojo); font-weight: 700; }
+      .tag {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 999px;
+        font-size: 0.74rem;
+        font-weight: 700;
+        background: rgba(46, 158, 91, 0.12);
+        color: var(--verde);
+        border: 1px solid rgba(46,158,91,0.25);
+      }
+
+      .tag.medio {
+        background: rgba(255, 180, 0, 0.12);
+        color: #b87500;
+        border-color: rgba(184,117,0,0.2);
+      }
+
+      .tag.alto {
+        background: rgba(217, 77, 77, 0.12);
+        color: var(--rojo);
+        border-color: rgba(217,77,77,0.25);
+      }
+
+      .stock-row.selected {
+        background: #edf4ff;
+      }
+
+      .table-source {
+        margin-top: 14px;
+        font-weight: 700;
+        color: var(--azul-marino);
+      }
+
+      .table-source .mini-note {
+        padding: 10px 13px;
+        background: #f5f8ff;
+        border-left: 3px solid var(--azul-marino);
+        border-radius: 0 10px 10px 0;
+      }
+
+      .chart-panel {
+        margin-top: 18px;
+        border: 1px solid #e3eaf5;
+        border-radius: 16px;
+        padding: 18px 18px 12px;
+        background: linear-gradient(180deg, #fbfcff, #f5f8ff);
+      }
+
+      .chart-panel h4 {
+        margin-bottom: 12px;
+      }
+
+      .chart-panel canvas {
+        width: 100% !important;
+        height: 300px !important;
+      }
+
+      .simulador-box {
+        background: linear-gradient(180deg, #f8faff 0%, #eef4ff 100%);
+        border: 1px solid #dfe8f7;
+        border-radius: 18px;
+        padding: 26px;
+      }
+
+      .controls-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+        gap: 18px;
+        margin-bottom: 20px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .field label {
+        font-weight: 700;
+        color: var(--azul-marino);
+      }
+
+      .field input,
+      .field select {
+        width: 100%;
+        border: 1px solid #cfdae8;
+        border-radius: 10px;
+        padding: 12px 13px;
+        font-size: 1rem;
+        background: var(--blanco);
+        min-height: 46px;
+        color: var(--gris-texto);
+      }
+
+      .field-hint {
+        margin: -2px 0 0;
+        color: #687286;
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      .check-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 8px;
+      }
+
+      .check-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid #cfdae8;
+        background: var(--blanco);
+        border-radius: 10px;
+        padding: 10px 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: border-color 0.18s ease, background 0.18s ease;
+      }
+
+      .check-item:hover {
+        border-color: #9aabd0;
+        background: #f9fbff;
+      }
+
+      .check-item input {
+        accent-color: var(--verde);
+        width: 17px;
+        height: 17px;
+      }
+
+      .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 24px 0 20px;
+      }
+
+      .tab-btn {
+        background: #edf3ff;
+        color: var(--azul-marino);
+        border: 1px solid #d5def5;
+        border-radius: 999px;
+        padding: 11px 16px;
+        cursor: pointer;
+        font-weight: 700;
+        min-height: 44px;
+      }
+
+      .tab-btn.active {
+        background: var(--azul-marino);
+        color: var(--blanco);
+        border-color: var(--azul-marino);
+      }
+
+      .tab-panel {
+        display: none;
+      }
+
+      .tab-panel.active {
+        display: block;
+      }
+
+      .results-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(180px, 1fr));
+        gap: 14px;
+        margin-top: 20px;
+      }
+
+      .result-card {
+        background: var(--blanco);
+        border: 1px solid #e2e8f1;
+        border-radius: 15px;
+        padding: 18px;
+        box-shadow: 0 4px 12px rgba(22, 35, 79, 0.035);
+      }
+
+      .result-card .label {
+        font-size: 0.8rem;
+        color: #5a6273;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 8px;
+      }
+
+      .result-card .value {
+        font-size: clamp(1.1rem, 2vw, 1.6rem);
+        font-weight: 700;
+        color: var(--azul-marino);
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+      }
+
+      .mini-note {
+        margin-top: 14px;
+        color: var(--gris-texto);
+        font-size: 0.94rem;
+        line-height: 1.5;
+      }
+
+      .simulator-message {
+        margin-top: 16px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        color: var(--azul-marino);
+        background: #eaf1ff;
+        border: 1px solid #d5e0f6;
+      }
+
+      .simulator-message:empty {
+        display: none;
+      }
+
+      .chart-wrap {
+        margin-top: 24px;
+        background: var(--blanco);
+        border: 1px solid #e2e8f1;
+        border-radius: 16px;
+        padding: 18px;
+        min-height: 340px;
+      }
+
+      .chart-wrap canvas {
+        width: 100% !important;
+        height: 300px !important;
+      }
+
+      .actions-bar {
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .print-btn {
+        background: var(--verde);
+        color: var(--blanco);
+      }
+
+      .reset-btn {
+        background: var(--azul-marino);
+        color: var(--blanco);
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px 16px 34px;
+        color: var(--azul-marino);
+        font-size: 0.96rem;
+        font-weight: 700;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      @media (max-width: 780px) {
+        .team-grid,
+        .controls-grid,
+        .results-grid,
+        .options-list {
+          grid-template-columns: 1fr;
+        }
+
+        .brand-row {
+          grid-template-columns: 1fr;
+          gap: 36px;
+        }
+
+        .hero-visual {
+          min-height: 320px;
+        }
+
+        .hero-photo {
+          width: 280px;
+          height: 280px;
+          min-width: 0;
+          min-height: 0;
+        }
+
+        .hero-visual::before {
+          width: 320px;
+        }
+
+        .hero-photo-label {
+          right: max(0px, calc(50% - 220px));
+          bottom: 0;
+        }
+
+        section {
+          padding: 22px;
+        }
+
+        .perfil-box,
+        .simulador-box {
+          padding: 20px;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .container,
+        .topbar-inner {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+
+        .topbar {
+          min-height: auto;
+          padding: 48px 0 42px;
+        }
+
+        .topbar-inner {
+          padding-left: 22px;
+          padding-right: 22px;
+        }
+
+        .brand {
+          font-size: clamp(2.55rem, 12vw, 3.4rem);
+        }
+
+        .hero-eyebrow {
+          font-size: 0.76rem;
+          letter-spacing: 0.13em;
+        }
+
+        .subtag {
+          margin-top: 16px;
+          font-size: 1.08rem;
+        }
+
+        .hero-actions {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 12px;
+          margin-top: 22px;
+        }
+
+        .hero-visual {
+          min-height: 250px;
+        }
+
+        .hero-photo {
+          width: 220px;
+          height: 220px;
+        }
+
+        .hero-visual::before {
+          width: 250px;
+          box-shadow: 0 0 0 16px rgba(255, 255, 255, 0.035);
+        }
+
+        .hero-photo-label {
+          right: 0;
+          bottom: -4px;
+          max-width: 215px;
+          padding: 10px 13px;
+        }
+
+        main {
+          padding-top: 18px;
+        }
+
+        section {
+          margin-bottom: 16px;
+          padding: 18px 15px;
+          border-radius: 17px;
+        }
+
+        .section-title {
+          margin-bottom: 15px;
+        }
+
+        .section-description {
+          margin-top: -6px;
+        }
+
+        .member-card {
+          flex-direction: column;
+          text-align: center;
+          padding: 18px 16px;
+        }
+
+        .member-card h3 {
+          overflow-wrap: anywhere;
+        }
+
+        .avatar-wrap {
+          width: 82px;
+          height: 82px;
+        }
+
+        .perfil-box,
+        .simulador-box {
+          padding: 16px;
+          border-radius: 15px;
+        }
+
+        .progress-header {
+          align-items: flex-start;
+        }
+
+        .tabs {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px;
+          margin: 18px 0 16px;
+        }
+
+        .tab-btn {
+          padding: 10px 8px;
+          border-radius: 12px;
+          line-height: 1.25;
+        }
+
+        .actions-bar {
+          flex-direction: column;
+        }
+
+        .actions-bar {
+          justify-content: stretch;
+        }
+
+        .actions-bar .btn {
+          width: 100%;
+        }
+
+        .chart-wrap {
+          padding: 12px;
+          min-height: 300px;
+        }
+
+        .chart-wrap canvas {
+          height: 260px !important;
+        }
+      }
+
+      @media (max-width: 700px) {
+        .table-shell {
+          border: 0;
+          border-radius: 0;
+          overflow: visible;
+          background: transparent;
+        }
+
+        .table-shell > div {
+          overflow: visible !important;
+        }
+
+        .table-shell table {
+          display: block;
+          min-width: 0;
+          border-collapse: separate;
+        }
+
+        .table-shell thead {
+          display: none;
+        }
+
+        .table-shell tbody {
+          display: grid;
+          gap: 13px;
+        }
+
+        .table-shell .stock-row {
+          display: block;
+          padding: 8px 14px;
+          background: var(--blanco);
+          border: 1px solid #e2e8f1;
+          border-radius: 15px;
+          box-shadow: 0 5px 15px rgba(22, 35, 79, 0.05);
+        }
+
+        .table-shell .stock-row.selected {
+          border-color: var(--azul-marino);
+          box-shadow: 0 0 0 2px rgba(22, 35, 79, 0.08), 0 5px 15px rgba(22, 35, 79, 0.05);
+        }
+
+        .table-shell td {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          gap: 14px;
+          padding: 9px 0;
+          border-bottom: 1px solid #edf0f5;
+          text-align: right;
+          font-size: 0.94rem;
+          overflow-wrap: anywhere;
+        }
+
+        .table-shell td::before {
+          content: attr(data-label);
+          flex: 0 0 46%;
+          text-align: left;
+          color: #687286;
+          font-size: 0.82rem;
+          font-weight: 600;
+        }
+
+        .table-shell td:first-child {
+          display: block;
+          padding: 8px 0 11px;
+          color: var(--azul-marino);
+          font-size: 1.1rem;
+          font-weight: 700;
+          text-align: left;
+        }
+
+        .table-shell td:first-child::before {
+          content: none;
+        }
+
+        .table-shell td:last-child {
+          border-bottom: 0;
+        }
+
+        .table-shell td .tag {
+          max-width: 52%;
+        }
+      }
+
+      @media print {
+        body {
+          background: #fff;
+        }
+
+        .topbar,
+        .actions-bar,
+        .simulador-box .tabs,
+        .simulador-box .nav-buttons,
+        .simulador-box .controls-grid,
+        .print-btn,
+        .reset-btn,
+        .section-title,
+        .profile-result,
+        .chart-panel,
+        .table-source,
+        .team-footer {
+          display: none !important;
+        }
+
+        .member-card,
+        .perfil-box,
+        .simulador-box,
+        .chart-wrap,
+        .result-card {
+          break-inside: avoid;
+          box-shadow: none;
+        }
+
+        .avatar-wrap {
+          border: 1px solid #dfe8f8;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand-row">
+          <div class="hero-copy">
+            <p class="hero-eyebrow">Mercado de Capitales · UNIPAZ · Barrancabermeja</p>
+            <h1 class="brand">SULAY Asesores de Inversión</h1>
+            <div class="subtag">Invierto contigo en un futuro lleno de oportunidades</div>
+            <div class="academic-note">
+              Herramienta académica. No constituye asesoría ni recomendación profesional de inversión.
+            </div>
+            <div class="hero-actions">
+              <a class="hero-cta" href="#acciones">Explorar acciones colombianas <span aria-hidden="true">&nbsp;↓</span></a>
+              <span class="hero-university">Una guía académica para conocer el mercado y simular escenarios.</span>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <img class="hero-photo" src="foto_1.png" alt="Jaryth Sulay Noriega Poveda, asesora de inversión" />
+            <div class="hero-photo-label">
+              <strong>Jaryth Sulay Noriega Poveda</strong>
+              <span>Esp. Big data e inteligencia de negocios</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section>
+        <h2 class="section-title">Su equipo asesor</h2>
+        <div class="team-grid">
+          <article class="member-card">
+            <div class="avatar-wrap">
+              <img src="foto_1.png" alt="Foto de Jaryth Sulay Noriega Poveda" onerror="this.onerror=null;this.parentElement.innerHTML='JS';" />
+            </div>
+            <div>
+              <h3>Jaryth Sulay Noriega Poveda</h3>
+              <div class="member-role">Asesor(a) financiero(a)</div>
+              <div class="member-pitch">Esp. Big data e inteligencia de negocios.</div>
+            </div>
+          </article>
+        </div>
+        <div class="team-footer">Estudiantes de Administración de Negocios Internacionales — UNIPAZ</div>
+      </section>
+
+      <section>
+        <h2 class="section-title">Conozcamos su perfil</h2>
+        <div class="perfil-box">
+          <div class="progress-header">
+            <span class="progress-text" id="progressText">Pregunta 1 de 5</span>
+            <span id="scoreText">Puntaje actual: 0</span>
+          </div>
+          <div class="progress" role="progressbar" aria-label="Progreso del perfil" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+
+          <div id="questionContainer"></div>
+
+          <div class="nav-buttons">
+            <button class="btn ghost" id="prevBtn" type="button">Anterior</button>
+            <button class="btn primary" id="nextBtn" type="button">Siguiente</button>
+          </div>
+
+          <div id="profileResult" class="profile-result" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section id="acciones">
+        <h2 class="section-title">Acciones más populares de Colombia</h2>
+        <p class="section-description">Revise el riesgo y los rendimientos históricos. Seleccione una acción para consultar su evolución mensual.</p>
+        <div id="dataWarning" class="action-warning" aria-live="polite"></div>
+        <div class="table-shell">
+          <div style="overflow-x:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Nemotécnico</th>
+                  <th>Sector</th>
+                  <th>Precio actual</th>
+                  <th>Variación del día</th>
+                  <th>Rent. 1 año</th>
+                  <th>Rent. anual 3 años</th>
+                  <th>Volatilidad anual</th>
+                  <th>Caída máxima 1 año</th>
+                  <th>Rend. por dividendo</th>
+                  <th>Riesgo</th>
+                  <th>Perfil</th>
+                </tr>
+              </thead>
+              <tbody id="stocksTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div id="tableSource" class="table-source"></div>
+        <div id="trmDisplay" class="trm-display" aria-live="polite"></div>
+        <div id="chartPanel" class="chart-panel hidden">
+          <h4 id="selectedStockTitle">Gráfico</h4>
+          <canvas id="stockChart"></canvas>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">Simulador de inversión</h2>
+        <div class="simulador-box">
+          <div class="controls-grid">
+            <div class="field">
+              <label for="instrumentSelector">Qué invertir</label>
+              <div id="instrumentSelector" class="check-grid"></div>
+              <p class="field-hint">Seleccione una acción o varias para formar una canasta con pesos iguales.</p>
+            </div>
+
+            <div class="field">
+              <label for="rateType">Rentabilidad base</label>
+              <select id="rateType">
+                <option value="3a">Promedio anual 3 años</option>
+                <option value="1a">Último año</option>
+                <option value="custom">Personalizada</option>
+              </select>
+              <input id="customRate" type="number" min="-100" max="100" step="0.1" placeholder="Ingrese rentabilidad anual %" style="margin-top:8px;" />
+            </div>
+          </div>
+
+          <div class="tabs" id="modeTabs">
+            <button class="tab-btn active" type="button" data-tab="vf">¿Cuánto tendré?</button>
+            <button class="tab-btn" type="button" data-tab="capital">¿Cuánto debo invertir hoy?</button>
+            <button class="tab-btn" type="button" data-tab="tiempo">¿En cuánto tiempo llego?</button>
+            <button class="tab-btn" type="button" data-tab="aporte">¿Cuánto debo ahorrar al mes?</button>
+          </div>
+
+          <div class="tab-panel active" id="panel-vf">
+            <div class="controls-grid">
+              <div class="field">
+                <label for="inversionInicial">Capital inicial</label>
+                <input id="inversionInicial" type="number" min="0" step="1000" value="5000000" />
+              </div>
+              <div class="field">
+                <label for="aporteMensual">Aporte mensual</label>
+                <input id="aporteMensual" type="number" min="0" step="1000" value="300000" />
+              </div>
+              <div class="field">
+                <label for="anios">Años</label>
+                <input id="anios" type="number" min="1" max="100" step="1" value="5" />
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="panel-capital">
+            <div class="controls-grid">
+              <div class="field">
+                <label for="metaCapital">Meta</label>
+                <input id="metaCapital" type="number" min="0" step="1000" value="30000000" />
+              </div>
+              <div class="field">
+                <label for="aniosCapital">Años</label>
+                <input id="aniosCapital" type="number" min="1" max="100" step="1" value="5" />
+              </div>
+              <div class="field">
+                <label for="aporteMensualCapital">Aporte mensual</label>
+                <input id="aporteMensualCapital" type="number" min="0" step="1000" value="300000" />
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="panel-tiempo">
+            <div class="controls-grid">
+              <div class="field">
+                <label for="inicialTiempo">Capital inicial</label>
+                <input id="inicialTiempo" type="number" min="0" step="1000" value="2000000" />
+              </div>
+              <div class="field">
+                <label for="metaTiempo">Meta</label>
+                <input id="metaTiempo" type="number" min="0" step="1000" value="30000000" />
+              </div>
+              <div class="field">
+                <label for="aporteMensualTiempo">Aporte mensual</label>
+                <input id="aporteMensualTiempo" type="number" min="0" step="1000" value="500000" />
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="panel-aporte">
+            <div class="controls-grid">
+              <div class="field">
+                <label for="inicialAporte">Capital inicial</label>
+                <input id="inicialAporte" type="number" min="0" step="1000" value="1500000" />
+              </div>
+              <div class="field">
+                <label for="metaAporte">Meta</label>
+                <input id="metaAporte" type="number" min="0" step="1000" value="30000000" />
+              </div>
+              <div class="field">
+                <label for="aniosAporte">Años</label>
+                <input id="aniosAporte" type="number" min="1" max="100" step="1" value="7" />
+              </div>
+            </div>
+          </div>
+
+          <div class="nav-buttons">
+            <button class="btn secondary" id="simulateBtn" type="button">Calcular escenario</button>
+          </div>
+
+          <div class="results-grid">
+            <div class="result-card">
+              <div class="label">Escenario pesimista</div>
+              <div class="value" id="pesimistaValor">$ 0</div>
+            </div>
+            <div class="result-card">
+              <div class="label">Escenario esperado</div>
+              <div class="value" id="esperadoValor">$ 0</div>
+            </div>
+            <div class="result-card">
+              <div class="label">Escenario optimista</div>
+              <div class="value" id="optimistaValor">$ 0</div>
+            </div>
+          </div>
+
+          <div class="mini-note" id="scenarioExplanation">
+            Los escenarios muestran un rango aproximado, no una garantía de resultados futuros.
+          </div>
+          <div class="simulator-message" id="simulatorMessage" role="status" aria-live="polite"></div>
+
+          <div class="results-grid" style="margin-top: 18px;">
+            <div class="result-card">
+              <div class="label">Total aportado</div>
+              <div class="value" id="totalAportadoValor">$ 0</div>
+            </div>
+            <div class="result-card">
+              <div class="label">Ganancia estimada</div>
+              <div class="value" id="gananciaValor">$ 0</div>
+            </div>
+            <div class="result-card">
+              <div class="label">Acciones hoy</div>
+              <div class="value" id="accionesHoyValor">0</div>
+            </div>
+          </div>
+
+          <div class="mini-note" id="cdtComparison"></div>
+          <div class="mini-note" id="realReturnInfo"></div>
+
+          <div class="chart-wrap">
+            <canvas id="simulacionChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <div class="actions-bar">
+        <button class="btn print-btn" type="button" id="printBtn">Imprimir o guardar en PDF</button>
+        <button class="btn reset-btn" type="button" id="resetBtn">Volver a empezar</button>
+      </div>
+    </main>
+
+    <footer class="footer">Proyecto de aula — Mercado de Capitales — UNIPAZ — <span id="currentDateFooter"></span></footer>
+
+    <script>
+      // CONFIG: todo lo editable y comentado en español.
+      const CONFIG = {
+        nombreFirma: 'SULAY',
+        eslogan: 'Invierto contigo en un futuro lleno de oportunidades',
+        asesores: [
+          { nombre: 'Jaryth Sulay Noriega Poveda', frase: 'Esp. Big data e inteligencia de negocios.' }
+        ],
+        preguntas: [
+          {
+            texto: '¿En cuánto tiempo necesitará el dinero?',
+            opciones: ['Menos de 1 año', '1 a 3 años', '3 a 5 años', 'Más de 5 años'],
+            puntos: [1, 2, 3, 4]
+          },
+          {
+            texto: 'Si su inversión cae 20 % en un mes, ¿qué hace?',
+            opciones: ['Retiro todo', 'Retiro una parte', 'Espero', 'Invierto más'],
+            puntos: [1, 2, 3, 4]
+          },
+          {
+            texto: '¿Qué ha invertido antes?',
+            opciones: ['Nada', 'CDT o ahorro', 'Fondos de inversión', 'Acciones'],
+            puntos: [1, 2, 3, 4]
+          },
+          {
+            texto: '¿Tiene ahorros para emergencias de 3 a 6 meses?',
+            opciones: ['No', 'Menos de 3 meses', 'Sí, 3 a 6 meses', 'Sí, más de 6 meses'],
+            puntos: [1, 2, 3, 4]
+          },
+          {
+            texto: '¿Qué busca?',
+            opciones: ['Proteger mi dinero', 'Un poco más que un CDT', 'Crecer', 'Crecer al máximo'],
+            puntos: [1, 2, 3, 4]
+          }
+        ],
+        tasaCdtDefault: 11.2,
+        inflacionDefault: 5.3,
+        chartColors: {
+          pesimista: '#d94d4d',
+          esperado: '#16234F',
+          optimista: '#2E9E5B',
+          aportado: '#9aa9cf'
+        }
+      };
+
+      // Sección: utilidades y formateo.
+      const moneyFormatter = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
+      const decimalFormatter = new Intl.NumberFormat('es-CO', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+      const percentFormatter = (value) => `${decimalFormatter.format(value)} %`;
+      const formatCurrency = (value) => moneyFormatter.format(Number(value || 0));
+      const formatNumber = (value) => new Intl.NumberFormat('es-CO', { maximumFractionDigits: 0 }).format(Number(value || 0));
+
+      const state = {
+        actions: [],
+        profileScore: 0,
+        answers: Array(CONFIG.preguntas.length).fill(null),
+        currentQuestion: 0,
+        currentProfile: 'Conservador',
+        selectedActionSymbols: new Set(),
+        selectedMode: 'vf',
+        principalChart: null,
+        simulationChart: null,
+        lastJsonMeta: null,
+        sourceText: 'Fuente: no disponible',
+        dataLoaded: false,
+        fallbackUsed: false
+      };
+
+      // Sección: carga de datos.json con fetch y fallback.
+      async function cargarDatos() {
+        const datosUrl = './datos.json';
+
+        try {
+          const respuesta = await fetch(datosUrl, { cache: 'no-store' });
+          if (!respuesta.ok) throw new Error('No se pudo cargar datos.json');
+          const json = await respuesta.json();
+          if (!Array.isArray(json.acciones) || !json.acciones.length) {
+            throw new Error('El JSON no tiene acciones válidas');
+          }
+          state.lastJsonMeta = json;
+          state.dataLoaded = true;
+          state.actions = normalizarAcciones(json.acciones);
+          state.sourceText = `Fuente: ${json.fuente || 'Fuente no disponible'} · Datos al ${formatDateForHuman(json.actualizado || new Date().toISOString())}`;
+          document.getElementById('tableSource').textContent = state.sourceText;
+          renderTrm(json.trm);
+          renderAccionesTable();
+          renderActionSelector();
+          renderSimuladorResultados();
+          document.getElementById('dataWarning').classList.remove('visible');
+        } catch (error) {
+          state.fallbackUsed = true;
+          state.dataLoaded = false;
+          const ejemplo = [
+            { ticker: 'EJEMPLOA', nombre: 'Acción Ejemplo A', nemotecnico: 'EJEMPLOA', sector: 'Financiero', moneda: 'COP', precio: 2200, fecha: '2026-11-16', variacion_dia_pct: 1.2, rent_1a_pct: 14.5, rent_anual_3a_pct: 11.8, volatilidad_anual_pct: 18.2, caida_maxima_1a_pct: 25.5, dividendo_rend_pct: 2.3, historico: generarHistoricoBase(36, 2200, 0.012) },
+            { ticker: 'EJEMPLOB', nombre: 'Acción Ejemplo B', nemotecnico: 'EJEMPLOB', sector: 'Industria', moneda: 'COP', precio: 3100, fecha: '2026-11-16', variacion_dia_pct: -0.8, rent_1a_pct: 9.7, rent_anual_3a_pct: 8.9, volatilidad_anual_pct: 22.4, caida_maxima_1a_pct: 31.2, dividendo_rend_pct: 1.7, historico: generarHistoricoBase(36, 3100, 0.018) },
+            { ticker: 'EJEMPLOC', nombre: 'Acción Ejemplo C', nemotecnico: 'EJEMPLOC', sector: 'Servicios', moneda: 'COP', precio: 1850, fecha: '2026-11-16', variacion_dia_pct: 0.5, rent_1a_pct: 16.4, rent_anual_3a_pct: 13.6, volatilidad_anual_pct: 30.7, caida_maxima_1a_pct: 42.1, dividendo_rend_pct: 3.6, historico: generarHistoricoBase(36, 1850, 0.021) }
+          ];
+          state.actions = normalizarAcciones(ejemplo);
+          state.sourceText = 'Fuente: no disponible · Datos al 2026-11-16';
+          document.getElementById('tableSource').textContent = state.sourceText;
+          renderTrm(null);
+          const aviso = document.getElementById('dataWarning');
+          aviso.textContent = 'DATOS DE EJEMPLO — NO SON REALES. Los datos reales aparecen cuando se publique en GitHub.';
+          aviso.classList.add('visible');
+          renderAccionesTable();
+          renderActionSelector();
+          renderSimuladorResultados();
+        }
+      }
+
+      function normalizarAcciones(rawAcciones) {
+        return rawAcciones.map((item, index) => ({
+          ...item,
+          id: item.ticker || `${item.nombre || 'accion'}-${index}`,
+          nombre: item.nombre || 'Acción sin nombre',
+          nemotecnico: item.nemotecnico || item.ticker || 'N/A',
+          sector: item.sector || 'Sin sector',
+          precio: Number(item.precio || 0),
+          fecha: item.fecha || new Date().toISOString().slice(0, 10),
+          variacion_dia_pct: Number(item.variacion_dia_pct || 0),
+          rent_1a_pct: Number(item.rent_1a_pct || 0),
+          rent_anual_3a_pct: Number(item.rent_anual_3a_pct || 0),
+          volatilidad_anual_pct: Number(item.volatilidad_anual_pct || 0),
+          caida_maxima_1a_pct: Number(item.caida_maxima_1a_pct || 0),
+          dividendo_rend_pct: Number(item.dividendo_rend_pct || 0),
+          riesgo: obtenerNivelRiesgo(Number(item.volatilidad_anual_pct || 0)),
+          historico: Array.isArray(item.historico) ? item.historico : generarHistoricoBase(36, Number(item.precio || 1000), 0.02)
+        }));
+      }
+
+      function formatDateForHuman(dateString) {
+        if (!dateString) return 'sin fecha';
+        const date = new Date(dateString);
+        if (Number.isNaN(date.getTime())) return dateString;
+        return date.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      }
+
+      function renderTrm(trm) {
+        const display = document.getElementById('trmDisplay');
+        if (!trm || !Number.isFinite(Number(trm.valor)) || !trm.fecha) {
+          display.textContent = '';
+          return;
+        }
+
+        display.textContent = `TRM: ${formatCurrency(trm.valor)} por USD · Datos al ${formatDateForHuman(trm.fecha)}`;
+      }
+
+      function generarHistoricoBase(totalMeses, precioBase, tendencia) {
+        const data = [];
+        let valor = precioBase;
+        for (let i = 0; i < totalMeses; i++) {
+          const mes = new Date();
+          mes.setMonth(mes.getMonth() - (totalMeses - i - 1));
+          valor = valor * (1 + (tendencia + (Math.sin(i / 2) * 0.03) - 0.01 * (i % 3)));
+          data.push({ mes: mes.toISOString().slice(0, 7), cierre: Number(valor.toFixed(2)) });
+        }
+        return data;
+      }
+
+      // Sección: perfil del inversionista.
+      function renderProfileQuestions() {
+        const container = document.getElementById('questionContainer');
+        const q = CONFIG.preguntas[state.currentQuestion];
+        container.innerHTML = '';
+
+        const wrapper = document.createElement('div');
+        wrapper.className = `question active`;
+        wrapper.innerHTML = `
+          <h3>${q.texto}</h3>
+          <div class="options-list"></div>
+        `;
+
+        const optionsWrap = wrapper.querySelector('.options-list');
+        q.opciones.forEach((option, index) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = `option ${state.answers[state.currentQuestion] === index ? 'selected' : ''}`;
+          btn.textContent = option;
+          btn.addEventListener('click', () => {
+            state.answers[state.currentQuestion] = index;
+            renderProfileQuestions();
+            actualizarPuntajePerfil();
+          });
+          optionsWrap.appendChild(btn);
+        });
+
+        container.appendChild(wrapper);
+        actualizarBarraPerfil();
+      }
+
+      function actualizarBarraPerfil() {
+        const percent = ((state.currentQuestion + 1) / CONFIG.preguntas.length) * 100;
+        document.getElementById('progressBar').style.width = `${percent}%`;
+        document.getElementById('progressText').textContent = `Pregunta ${state.currentQuestion + 1} de ${CONFIG.preguntas.length}`;
+        document.querySelector('.progress').setAttribute('aria-valuenow', String(state.currentQuestion + 1));
+        document.getElementById('prevBtn').disabled = state.currentQuestion === 0;
+      }
+
+      function actualizarPuntajePerfil() {
+        state.profileScore = state.answers.reduce((total, answerIndex, i) => {
+          if (answerIndex === null) return total;
+          return total + CONFIG.preguntas[i].puntos[answerIndex];
+        }, 0);
+
+        document.getElementById('scoreText').textContent = `Puntaje actual: ${state.profileScore}`;
+
+        if (state.answers.every((answer) => answer !== null)) {
+          mostrarPerfilResultado();
+        }
+      }
+
+      function mostrarPerfilResultado() {
+        const score = state.profileScore;
+        let tipo = 'Conservador';
+        if (score >= 16) tipo = 'Arriesgado';
+        else if (score >= 10) tipo = 'Moderado';
+
+        state.currentProfile = tipo;
+        actualizarAjustePerfil();
+        const perfiles = {
+          Conservador: {
+            texto: 'Su perfil se orienta a proteger el capital y priorizar estabilidad. Para su perfil, las acciones deberían ser una parte pequeña de su dinero; considere primero CDT, TES o fondos de renta fija.',
+            detalle: 'Su prioridad es conservar el dinero con menor riesgo.'
+          },
+          Moderado: {
+            texto: 'Su perfil admite un equilibrio entre seguridad y crecimiento. Puede combinar renta fija con una parte moderada en acciones.',
+            detalle: 'Busca crecer sin exponerse a movimientos muy bruscos.'
+          },
+          Arriesgado: {
+            texto: 'Su perfil es más agresivo y busca crecimiento a largo plazo. Puede mantener una mayor proporción en acciones con mayor volatilidad.',
+            detalle: 'Acepta mayor variabilidad para buscar mejores rendimientos.'
+          }
+        };
+
+        const box = document.getElementById('profileResult');
+        box.classList.add('visible');
+        box.innerHTML = `
+          <h3>Perfil: ${tipo}</h3>
+          <p><strong>Puntaje total:</strong> ${score} / 20</p>
+          <p>${perfiles[tipo].detalle}</p>
+          <p>${perfiles[tipo].texto}</p>
+        `;
+      }
+
+      document.getElementById('nextBtn').addEventListener('click', () => {
+        if (state.answers[state.currentQuestion] === null) {
+          alert('Debe responder la pregunta actual antes de continuar.');
+          return;
+        }
+
+        if (state.currentQuestion < CONFIG.preguntas.length - 1) {
+          state.currentQuestion += 1;
+          renderProfileQuestions();
+          actualizarPuntajePerfil();
+          if (state.answers.every((answer) => answer !== null)) {
+            mostrarPerfilResultado();
+          }
+        } else {
+          mostrarPerfilResultado();
+        }
+      });
+
+      document.getElementById('prevBtn').addEventListener('click', () => {
+        if (state.currentQuestion > 0) {
+          state.currentQuestion -= 1;
+          renderProfileQuestions();
+          actualizarPuntajePerfil();
+        }
+      });
+
+      renderProfileQuestions();
+
+      // Sección: tabla y gráfico de acciones.
+      function obtenerNivelRiesgo(volatilidad) {
+        if (volatilidad < 20) return 'Bajo';
+        if (volatilidad <= 35) return 'Medio';
+        return 'Alto';
+      }
+
+      function renderAccionesTable() {
+        const tbody = document.getElementById('stocksTableBody');
+        const source = document.getElementById('tableSource');
+        tbody.innerHTML = '';
+        source.innerHTML = '';
+        source.textContent = state.sourceText;
+
+        const acciones = state.actions;
+        for (const accion of acciones) {
+          const row = document.createElement('tr');
+          row.className = 'stock-row';
+          row.dataset.ticker = accion.ticker || accion.nemotecnico;
+          row.tabIndex = 0;
+          row.setAttribute('role', 'button');
+          row.setAttribute('aria-label', `Ver gráfico de ${accion.nombre}`);
+          const seleccionarAccion = () => {
+            document.querySelectorAll('.stock-row').forEach((tr) => tr.classList.remove('selected'));
+            row.classList.add('selected');
+            renderStockChart(accion);
+          };
+          row.addEventListener('click', seleccionarAccion);
+          row.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              seleccionarAccion();
+            }
+          });
+
+          const variacionClass = Number(accion.variacion_dia_pct) >= 0 ? 'positive' : 'negative';
+          const rent1a = Number(accion.rent_1a_pct) >= 0 ? 'positive' : 'negative';
+          const rent3a = Number(accion.rent_anual_3a_pct) >= 0 ? 'positive' : 'negative';
+          const riesgo = accion.riesgo || obtenerNivelRiesgo(Number(accion.volatilidad_anual_pct || 0));
+          const riesgoClass = riesgo === 'Bajo' ? 'tag' : riesgo === 'Medio' ? 'tag medio' : 'tag alto';
+
+          row.innerHTML = `
+            <td>${accion.nombre}</td>
+            <td data-label="Nemotécnico">${accion.nemotecnico}</td>
+            <td data-label="Sector">${accion.sector}</td>
+            <td data-label="Precio actual">${formatCurrency(accion.precio)}</td>
+            <td data-label="Variación del día" class="${variacionClass}">${percentFormatter(accion.variacion_dia_pct)}</td>
+            <td data-label="Rentabilidad 1 año" class="${rent1a}">${percentFormatter(accion.rent_1a_pct)}</td>
+            <td data-label="Rentabilidad anual 3 años" class="${rent3a}">${percentFormatter(accion.rent_anual_3a_pct)}</td>
+            <td data-label="Volatilidad anual">${percentFormatter(accion.volatilidad_anual_pct)}</td>
+            <td data-label="Caída máxima 1 año" class="${Number(accion.caida_maxima_1a_pct) >= 0 ? 'negative' : 'positive'}">${percentFormatter(accion.caida_maxima_1a_pct)}</td>
+            <td data-label="Rendimiento por dividendo">${percentFormatter(accion.dividendo_rend_pct)}</td>
+            <td data-label="Riesgo"><span class="${riesgoClass}">${riesgo}</span></td>
+            <td data-label="Perfil" class="profile-fit"></td>
+          `;
+          tbody.appendChild(row);
+        }
+
+        actualizarAjustePerfil();
+
+        if (state.actions.length) {
+          const selected = state.actions[0];
+          renderStockChart(selected);
+        }
+      }
+
+      function actualizarAjustePerfil() {
+        const source = document.getElementById('tableSource');
+        const tbody = document.getElementById('stocksTableBody');
+        if (!source || !tbody) return;
+
+        const perfil = state.currentProfile || 'Conservador';
+        const recomendadas = evaluarPerfilAcciones(perfil, state.actions);
+        const recomendadasIds = new Set(recomendadas.map((accion) => accion.ticker || accion.nemotecnico));
+        tbody.querySelectorAll('.stock-row').forEach((row) => {
+          const accionId = row.dataset.ticker;
+          const celda = row.querySelector('.profile-fit');
+          celda.innerHTML = '';
+          if (recomendadasIds.has(accionId)) {
+            const etiqueta = document.createElement('span');
+            etiqueta.className = 'tag';
+            etiqueta.textContent = 'Acorde a su perfil';
+            celda.appendChild(etiqueta);
+          } else {
+            celda.textContent = '—';
+          }
+        });
+
+        source.innerHTML = '';
+        source.textContent = state.sourceText;
+        const mensaje = document.createElement('div');
+        mensaje.className = 'mini-note';
+        if (recomendadas.length) {
+          mensaje.innerHTML = `<strong>Acciones acordes a su perfil:</strong> ${recomendadas.map((a) => a.nombre).join(', ')}.`;
+        } else {
+          mensaje.textContent = 'Ninguna de estas acciones tiene riesgo bajo; para su perfil conviene priorizar instrumentos de renta fija.';
+        }
+        source.appendChild(mensaje);
+      }
+
+      function evaluarPerfilAcciones(perfil, acciones) {
+        const reglas = {
+          Conservador: 'Bajo',
+          Moderado: ['Bajo', 'Medio'],
+          Arriesgado: ['Bajo', 'Medio', 'Alto']
+        };
+
+        return acciones.filter((accion) => {
+          const riesgo = accion.riesgo || obtenerNivelRiesgo(Number(accion.volatilidad_anual_pct || 0));
+          const esperado = reglas[perfil];
+          if (Array.isArray(esperado)) return esperado.includes(riesgo);
+          return riesgo === esperado;
+        });
+      }
+
+      function renderStockChart(stock) {
+        const canvas = document.getElementById('stockChart');
+        const panel = document.getElementById('chartPanel');
+        const title = document.getElementById('selectedStockTitle');
+
+        if (!stock) return;
+
+        panel.classList.remove('hidden');
+        title.textContent = `${stock.nombre} (${stock.nemotecnico}) — evolución mensual últimos 3 años`;
+
+        const labels = (stock.historico || []).map((p) => p.mes);
+        const data = (stock.historico || []).map((p) => Number(p.cierre || 0));
+
+        if (state.principalChart) state.principalChart.destroy();
+        state.principalChart = new Chart(canvas.getContext('2d'), {
+          type: 'line',
+          data: {
+            labels,
+            datasets: [{
+              label: stock.nemotecnico,
+              data,
+              borderColor: '#16234F',
+              backgroundColor: 'rgba(22,35,79,0.08)',
+              tension: 0.25,
+              fill: false,
+              borderWidth: 2
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false }
+            },
+            scales: {
+              x: { display: false },
+              y: { ticks: { callback: (value) => formatCurrency(value) } }
+            }
+          }
+        });
+      }
+
+      function renderActionSelector() {
+        const selector = document.getElementById('instrumentSelector');
+        selector.innerHTML = '';
+        state.actions.forEach((accion) => {
+          const label = document.createElement('label');
+          label.className = 'check-item';
+          label.innerHTML = `
+            <input type="checkbox" value="${accion.ticker || accion.nemotecnico}" checked />
+            <span>${accion.nemotecnico}</span>
+          `;
+          selector.appendChild(label);
+        });
+
+        selector.querySelectorAll('input').forEach((checkbox) => {
+          checkbox.addEventListener('change', () => {
+            const selected = [...selector.querySelectorAll('input:checked')].map((input) => input.value);
+            state.selectedActionSymbols = new Set(selected);
+            renderSimuladorResultados();
+          });
+        });
+
+        const selected = state.actions.map((accion) => accion.ticker || accion.nemotecnico);
+        state.selectedActionSymbols = new Set(selected);
+      }
+
+      // Sección: simulador financiero.
+      function getSelectedStocks() {
+        const selected = [...document.querySelectorAll('#instrumentSelector input:checked')].map((input) => input.value);
+        return state.actions.filter((stock) => selected.includes(stock.ticker || stock.nemotecnico));
+      }
+
+      function getRateForSelectedMode() {
+        const selectedStocks = getSelectedStocks();
+        if (!selectedStocks.length) return { r: 0, sigma: 0, source: 'Sin acciones' };
+
+        const tipo = document.getElementById('rateType').value;
+        let r = 0;
+        let sigma = 0;
+
+        if (tipo === '3a') {
+          r = average(selectedStocks.map((s) => Number(s.rent_anual_3a_pct || 0)))/100;
+          sigma = average(selectedStocks.map((s) => Number(s.volatilidad_anual_pct || 0)))/100;
+        } else if (tipo === '1a') {
+          r = average(selectedStocks.map((s) => Number(s.rent_1a_pct || 0)))/100;
+          sigma = average(selectedStocks.map((s) => Number(s.volatilidad_anual_pct || 0)))/100;
+        } else {
+          const customValue = Number(document.getElementById('customRate').value || 0);
+          r = customValue / 100;
+          sigma = average(selectedStocks.map((s) => Number(s.volatilidad_anual_pct || 0)))/100;
+        }
+
+        return { r, sigma, source: tipo === 'custom' ? 'Personalizada' : 'Seleccionada' };
+      }
+
+      function average(arr) {
+        if (!arr.length) return 0;
+        return arr.reduce((a, b) => a + b, 0) / arr.length;
+      }
+
+      function calcularCuotaMensualEfectiva(r) {
+        if (r <= -1) return NaN;
+        return Math.pow(1 + r, 1 / 12) - 1;
+      }
+
+      function valorFuturoCapital(C, r, n, A, i) {
+        const factor = Math.pow(1 + r, n);
+        if (Math.abs(i) < 1e-12) {
+          return C * factor + A * (12 * n);
+        }
+        const montoAportes = A * ((Math.pow(1 + i, 12 * n) - 1) / i);
+        return C * factor + montoAportes;
+      }
+
+      function capitalNecesario(meta, A, r, n, i) {
+        if (Math.abs(i) < 1e-12) {
+          const aporteSimple = A * (12 * n);
+          const restante = meta - aporteSimple;
+          return Math.max(0, restante / Math.pow(1 + r, n));
+        }
+        const aporteTotal = A * ((Math.pow(1 + i, 12 * n) - 1) / i);
+        return Math.max(0, (meta - aporteTotal) / Math.pow(1 + r, n));
+      }
+
+      function aporteNecesario(meta, C, r, n, i) {
+        if (Math.abs(i) < 1e-12) {
+          const sumaAportes = Math.max(0, meta - C * Math.pow(1 + r, n));
+          return sumaAportes / (12 * n);
+        }
+        const denominador = (Math.pow(1 + i, 12 * n) - 1) / i;
+        return Math.max(0, (meta - C * Math.pow(1 + r, n)) * i / denominador);
+      }
+
+      function tiempoParaMeta(C, meta, A, r) {
+        if (r <= 0 && meta > C) {
+          const mesesNecesarios = Math.ceil((meta - C) / Math.max(A, 1));
+          return { años: Math.floor(mesesNecesarios / 12), meses: mesesNecesarios % 12, logrado: mesesNecesarios <= 1200 };
+        }
+        if (r <= 0) {
+          return { años: 0, meses: 0, logrado: true };
+        }
+
+        let saldo = C;
+        let aporteMensual = A;
+        let mes = 0;
+        const maxMeses = 1200;
+        const i = calcularCuotaMensualEfectiva(r);
+        while (mes < maxMeses && saldo < meta) {
+          saldo = saldo * (1 + r) ** (1 / 12);
+          saldo += aporteMensual;
+          mes += 1;
+        }
+
+        if (mes >= maxMeses) {
+          return { años: null, meses: null, logrado: false };
+        }
+
+        return {
+          años: Math.floor(mes / 12),
+          meses: mes % 12,
+          logrado: true
+        };
+      }
+
+      function roundCurrency(value) {
+        return Number(value || 0);
+      }
+
+      function getSelectedPriceAndVolatility() {
+        const acciones = getSelectedStocks();
+        if (!acciones.length) return { precioPromedio: 0, volatilidad: 0 };
+        const precioPromedio = average(acciones.map((a) => Number(a.precio || 0)));
+        const volatilidad = average(acciones.map((a) => Number(a.volatilidad_anual_pct || 0))) / 100;
+        return { precioPromedio, volatilidad };
+      }
+
+      function calcularSimulacionEscenarios() {
+        const acciones = getSelectedStocks();
+        if (!acciones.length) {
+          return {
+            pesimista: 0,
+            esperado: 0,
+            optimista: 0,
+            totalAportado: 0,
+            ganancia: 0,
+            accionesHoy: 0,
+            sobrante: 0,
+            cdt: 0,
+            real: 0,
+            r: 0,
+            sigma: 0,
+            mostrarMensaje: 'Seleccione al menos una acción para simular.'
+          };
+        }
+
+        const mode = document.getElementById('modeTabs .tab-btn.active')?.dataset.tab || 'vf';
+        let capitalInicial = 0;
+        let aporteMensual = 0;
+        let años = 5;
+        let meta = 0;
+
+        if (mode === 'vf') {
+          capitalInicial = Number(document.getElementById('inversionInicial').value || 0);
+          aporteMensual = Number(document.getElementById('aporteMensual').value || 0);
+          años = Number(document.getElementById('anios').value || 1);
+        } else if (mode === 'capital') {
+          meta = Number(document.getElementById('metaCapital').value || 0);
+          años = Number(document.getElementById('aniosCapital').value || 1);
+          aporteMensual = Number(document.getElementById('aporteMensualCapital').value || 0);
+        } else if (mode === 'tiempo') {
+          capitalInicial = Number(document.getElementById('inicialTiempo').value || 0);
+          meta = Number(document.getElementById('metaTiempo').value || 0);
+          aporteMensual = Number(document.getElementById('aporteMensualTiempo').value || 0);
+        } else if (mode === 'aporte') {
+          capitalInicial = Number(document.getElementById('inicialAporte').value || 0);
+          meta = Number(document.getElementById('metaAporte').value || 0);
+          años = Number(document.getElementById('aniosAporte').value || 1);
+        }
+
+        const { r, sigma } = getRateForSelectedMode();
+        const i = calcularCuotaMensualEfectiva(r);
+        const totalAportado = capitalInicial + (aporteMensual * 12 * años);
+
+        let escenarioEsperado = 0;
+        if (mode === 'vf') {
+          escenarioEsperado = valorFuturoCapital(capitalInicial, r, años, aporteMensual, i);
+        } else if (mode === 'capital') {
+          escenarioEsperado = capitalNecesario(meta, aporteMensual, r, años, i);
+        } else if (mode === 'tiempo') {
+          const tiempo = tiempoParaMeta(capitalInicial, meta, aporteMensual, r);
+          escenarioEsperado = tiempo.logrado ? meta : 0;
+        } else if (mode === 'aporte') {
+          escenarioEsperado = aporteNecesario(meta, capitalInicial, r, años, i);
+        }
+
+        const factor = Math.max(1, Math.sqrt(Math.max(1, años)));
+        const pesimista = r - sigma / factor;
+        const optimista = r + sigma / factor;
+
+        const pesimistaValor = mode === 'vf' ? valorFuturoCapital(capitalInicial, pesimista, años, aporteMensual, calcularCuotaMensualEfectiva(pesimista)) : (mode === 'capital' ? capitalNecesario(meta, aporteMensual, pesimista, años, calcularCuotaMensualEfectiva(pesimista)) : (mode === 'tiempo' ? 0 : aporteNecesario(meta, capitalInicial, pesimista, años, calcularCuotaMensualEfectiva(pesimista))));
+        const optimistaValor = mode === 'vf' ? valorFuturoCapital(capitalInicial, optimista, años, aporteMensual, calcularCuotaMensualEfectiva(optimista)) : (mode === 'capital' ? capitalNecesario(meta, aporteMensual, optimista, años, calcularCuotaMensualEfectiva(optimista)) : (mode === 'tiempo' ? 0 : aporteNecesario(meta, capitalInicial, optimista, años, calcularCuotaMensualEfectiva(optimista))));
+
+        const { precioPromedio } = getSelectedPriceAndVolatility();
+        const accionesHoy = Math.floor(capitalInicial / precioPromedio) || 0;
+        const sobrante = capitalInicial - (accionesHoy * precioPromedio);
+        const cdtRate = Number(document.getElementById('rateType').value === 'custom' ? document.getElementById('customRate').value || CONFIG.tasaCdtDefault : CONFIG.tasaCdtDefault);
+        const inflacion = Number(CONFIG.inflacionDefault || 0);
+        const realReturn = ((1 + r) / (1 + inflacion / 100)) - 1;
+
+        return {
+          pesimista: pesimistaValor,
+          esperado: escenarioEsperado,
+          optimista: optimistaValor,
+          totalAportado,
+          ganancia: Math.max(0, escenarioEsperado - totalAportado),
+          accionesHoy,
+          sobrante,
+          cdt: cdtRate,
+          realReturn,
+          r,
+          sigma
+        };
+      }
+
+      function dibujarGraficoSimulacion() {
+        const canvas = document.getElementById('simulacionChart');
+        const years = 6;
+        const { r, sigma } = getRateForSelectedMode();
+        const capitalInicial = Number(document.getElementById('inversionInicial').value || 0);
+        const aporteMensual = Number(document.getElementById('aporteMensual').value || 0);
+        const labels = Array.from({ length: years }, (_, i) => `Año ${i + 1}`);
+
+        const baseSeries = [];
+        const pesimistaSeries = [];
+        const optimistaSeries = [];
+        const totalAportadoSeries = [];
+
+        for (let i = 1; i <= years; i++) {
+          const rPes = r - (sigma / Math.sqrt(Math.max(1, i)));
+          const rOpt = r + (sigma / Math.sqrt(Math.max(1, i)));
+          const valorBase = valorFuturoCapital(capitalInicial, r, i, aporteMensual, calcularCuotaMensualEfectiva(r));
+          const valorPes = valorFuturoCapital(capitalInicial, rPes, i, aporteMensual, calcularCuotaMensualEfectiva(rPes));
+          const valorOpt = valorFuturoCapital(capitalInicial, rOpt, i, aporteMensual, calcularCuotaMensualEfectiva(rOpt));
+          const aportado = capitalInicial + aporteMensual * 12 * i;
+
+          baseSeries.push(Math.round(valorBase));
+          pesimistaSeries.push(Math.round(valorPes));
+          optimistaSeries.push(Math.round(valorOpt));
+          totalAportadoSeries.push(aportado);
+        }
+
+        if (state.simulationChart) state.simulationChart.destroy();
+        state.simulationChart = new Chart(canvas.getContext('2d'), {
+          type: 'line',
+          data: {
+            labels,
+            datasets: [
+              { label: 'Pesimista', data: pesimistaSeries, borderColor: CONFIG.chartColors.pesimista, borderWidth: 2, fill: false },
+              { label: 'Esperado', data: baseSeries, borderColor: CONFIG.chartColors.esperado, borderWidth: 2, fill: false },
+              { label: 'Optimista', data: optimistaSeries, borderColor: CONFIG.chartColors.optimista, borderWidth: 2, fill: false },
+              { label: 'Total aportado', data: totalAportadoSeries, borderColor: CONFIG.chartColors.aportado, borderWidth: 2, fill: false, borderDash: [6, 4] }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } },
+            scales: { y: { ticks: { callback: (value) => formatCurrency(value) } } }
+          }
+        });
+      }
+
+      function renderSimuladorResultados() {
+        const resultados = calcularSimulacionEscenarios();
+        const mensaje = document.getElementById('simulatorMessage');
+
+        if (resultados.mostrarMensaje) {
+          ['pesimistaValor', 'esperadoValor', 'optimistaValor', 'totalAportadoValor', 'gananciaValor', 'accionesHoyValor']
+            .forEach((id) => {
+              document.getElementById(id).textContent = '—';
+            });
+          document.getElementById('cdtComparison').textContent = '';
+          document.getElementById('realReturnInfo').textContent = '';
+          mensaje.textContent = resultados.mostrarMensaje;
+          if (state.simulationChart) {
+            state.simulationChart.destroy();
+            state.simulationChart = null;
+          }
+          return;
+        }
+
+        mensaje.textContent = '';
+
+        document.getElementById('pesimistaValor').textContent = formatCurrency(resultados.pesimista);
+        document.getElementById('esperadoValor').textContent = formatCurrency(resultados.esperado);
+        document.getElementById('optimistaValor').textContent = formatCurrency(resultados.optimista);
+        document.getElementById('totalAportadoValor').textContent = formatCurrency(resultados.totalAportado);
+        document.getElementById('gananciaValor').textContent = formatCurrency(resultados.ganancia);
+        document.getElementById('accionesHoyValor').textContent = `${formatNumber(resultados.accionesHoy)} (${formatCurrency(resultados.sobrante)} sobrante)`;
+
+        const cdtRate = CONFIG.tasaCdtDefault;
+        const realRate = resultados.realReturn;
+        document.getElementById('cdtComparison').textContent = `Comparación con CDT: si el CDT paga ${percentFormatter(cdtRate)}, su rendimiento proyectado se compara con la rentabilidad esperada del portafolio. La diferencia se debe revisar en la estimación final.`;
+        document.getElementById('realReturnInfo').textContent = `Rentabilidad real frente a la inflación: ${(realRate * 100).toFixed(1)} % (fórmula: (1 + r) / (1 + inflación) - 1).`;
+
+        dibujarGraficoSimulacion();
+      }
+
+      function activarTab(tabName) {
+        state.selectedMode = tabName;
+        document.querySelectorAll('.tab-btn').forEach((button) => {
+          button.classList.toggle('active', button.dataset.tab === tabName);
+        });
+        document.querySelectorAll('.tab-panel').forEach((panel) => {
+          panel.classList.toggle('active', panel.id === `panel-${tabName}`);
+        });
+      }
+
+      document.querySelectorAll('.tab-btn').forEach((button) => {
+        button.addEventListener('click', () => {
+          activarTab(button.dataset.tab);
+          renderSimuladorResultados();
+        });
+      });
+
+      document.getElementById('rateType').addEventListener('change', () => {
+        const customField = document.getElementById('customRate');
+        customField.style.display = document.getElementById('rateType').value === 'custom' ? 'block' : 'none';
+        renderSimuladorResultados();
+      });
+
+      document.getElementById('customRate').style.display = 'none';
+      document.getElementById('customRate').addEventListener('change', renderSimuladorResultados);
+      document.getElementById('simulateBtn').addEventListener('click', renderSimuladorResultados);
+
+      document.getElementById('printBtn').addEventListener('click', () => {
+        window.print();
+      });
+
+      document.getElementById('resetBtn').addEventListener('click', () => {
+        state.answers = Array(CONFIG.preguntas.length).fill(null);
+        state.currentQuestion = 0;
+        state.profileScore = 0;
+        state.currentProfile = 'Conservador';
+        document.getElementById('profileResult').classList.remove('visible');
+        document.getElementById('profileResult').innerHTML = '';
+        renderProfileQuestions();
+        actualizarAjustePerfil();
+        document.getElementById('scoreText').textContent = 'Puntaje actual: 0';
+      });
+
+      const currentDate = new Date();
+      document.getElementById('currentDateFooter').textContent = currentDate.toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' });
+
+      cargarDatos();
+    </script>
+  </body>
+</html>
