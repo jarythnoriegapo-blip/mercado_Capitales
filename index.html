@@ -1908,7 +1908,7 @@
           return sumaAportes / (12 * n);
         }
         const denominador = (Math.pow(1 + i, 12 * n) - 1) / i;
-        return Math.max(0, (meta - C * Math.pow(1 + r, n)) * i / denominador);
+        return Math.max(0, (meta - C * Math.pow(1 + r, n)) / denominador);
       }
 
       function tiempoParaMeta(C, meta, A, r) {
